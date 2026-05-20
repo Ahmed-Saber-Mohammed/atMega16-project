@@ -6,10 +6,9 @@ AVRDUDE = avrdude
 PROGRAMMER = usbasp
 PORT = usb
 
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -I lib
 
-SRC = src/main.c lib/button.c
-OBJ = $(SRC:.c=.o)
+SRC = src/main.c lib/button.c lib/i2c.c lib/lcd_i2c.c
 
 all: main.hex
 
@@ -23,4 +22,4 @@ upload: main.hex
 	$(AVRDUDE) -c $(PROGRAMMER) -p m16 -P $(PORT) -B 5kHz -U flash:w:main.hex
 
 clean:
-	rm -f *.elf *.hex src/*.o lib/*.o
+	rm -f *.elf *.hex
